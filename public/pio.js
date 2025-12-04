@@ -12,6 +12,7 @@ class Pio {
     this.conection_result = -1;
     this.str_room = "";
     this.r_value = "";
+    PlayerIO.useSecureApiRequests = true
   }
 
   messege_queue_size() {
