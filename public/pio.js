@@ -12,7 +12,7 @@ class Pio {
     this.conection_result = -1;
     this.str_room = "";
     this.r_value = "";
-
+    PlayerIO.useSecureApiRequests = true
   }
 
   messege_queue_size() {
@@ -41,7 +41,7 @@ class Pio {
       {},
       (cliente) => {
         this.client = cliente;
-        this.client.multiplayer.useSecureApiRequests = true
+        this.client.multiplayer.useSecureConnections = true
         this.registration_result = 1;
         this.esperando_resultado = false;
       },
@@ -70,6 +70,7 @@ class Pio {
       {},
       (cliente) => {
         this.client = cliente;
+        this.client.multiplayer.useSecureConnections = true
         this.registration_result = 1;
         this.esperando_resultado = false;
       },
