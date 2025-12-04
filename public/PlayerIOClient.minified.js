@@ -63,7 +63,7 @@ JSON || (JSON = {});
     }; _pio.flashSocketConnection = function (a, e, f, g, t) {
         var h = "cb" + d++, k = this, l = new _pio.messageSerializer, m = !1, r = !1, n = setTimeout(function () { m || (m = !0, f(!1, "Connect attempt timed out")) }, e); this.disconnect = function () { console.log("... this shouldn't happen") }; this.sendMessage = function (a) { console.log("... send msg. this shouldn't happen") }; b(function (e) {
             null == e ? (m = !0, f(!1, "Browser does not support WebSocket connections and the Flash fallback failed.")) :
-            (c[h] = function (a, c) { switch (a) { case "onopen": m || (clearTimeout(n), r = m = !0, e.socketSend(h, [0]), f(r)); break; case "onclose": k.disconnect(); break; case "onerror": k.disconnect(); break; case "onmessage": t(l.deserializeMessage(c, 0, c.length)) } }, k.disconnect = function () { if (r) { r = !1; g(); try { e.socketClose(h) } catch (w) { _pio.debugLog(w) } } }, k.sendMessage = function (a) { a = l.serializeMessage(a); e.socketSend(h, a) }, e.socketConnection(h, a))
+                (c[h] = function (a, c) { switch (a) { case "onopen": m || (clearTimeout(n), r = m = !0, e.socketSend(h, [0]), f(r)); break; case "onclose": k.disconnect(); break; case "onerror": k.disconnect(); break; case "onmessage": t(l.deserializeMessage(c, 0, c.length)) } }, k.disconnect = function () { if (r) { r = !1; g(); try { e.socketClose(h) } catch (w) { _pio.debugLog(w) } } }, k.sendMessage = function (a) { a = l.serializeMessage(a); e.socketSend(h, a) }, e.socketConnection(h, a))
         })
     }; _pio.isFlashFallbackEnabled = function (a) { b(function (c) { a(null != c) }) }; var a = null, e = !1,
         f = null
@@ -243,26 +243,26 @@ PlayerIOErrorCode = {
             {}, h = !1; _pio.bigDBDeserialize(e, f, !0); this.table = g; this.key = c; this.existsInDatabase = !0; this.save = function (c, d, e, f) { b.saveChanges(c, d, [this], e, f, a) }; this._internal_ = function (a, b) { switch (a) { case "get-table": return g; case "get-key": return c; case "set-is-saving": h = b; case "get-is-saving": return h; case "get-version": return d; case "set-version": d = b; case "get-dbCurrent": return f; case "change-dbCurrent": _pio.bigDBDeserialize(b, f, !0) } }; _pio.bigDBDeserialize(e, this, !0)
     }; _pio.compareForChanges = function (b, g, c,
         d) {
-            var a = [], e; for (e in g) {
-                var f = g[e], h = b ? b[e] : null; switch (e) { case "table": if (d) continue; case "key": if (d) continue; case "save": if (d) continue; case "existsInDatabase": if (d) continue; case "_internal_": if (d) continue; case "_circular_reference_finder_": continue }if (null != f) {
-                    var l = c ? { name: e } : { index: parseInt(e) }; switch (typeof f) {
-                        case "boolean": f != h && (l.value = { valuetype: _pio.ValueType.Bool, bool: f }, a.push(l)); break; case "number": f != h && (isFinite(f) && Math.floor(f) === f ? l.value = -2147483648 <= f && 2147483647 >= f ? {
-                            valuetype: _pio.ValueType.Int,
-                            "int": f
-                        } : 0 < f && 4294967295 >= f ? { valuetype: _pio.ValueType.UInt, uint: f } : -0x7ffffffffffffc00 <= f && 0x7ffffffffffffc00 >= f ? { valuetype: _pio.ValueType.Long, "long": f } : 0 < f && 1.844674407370955E19 >= f ? { valuetype: _pio.ValueType.ULong, ulong: f } : { valuetype: _pio.ValueType.Double, "double": f } : l.value = { valuetype: _pio.ValueType.Double, "double": f }, a.push(l)); break; case "string": f != h && (l.value = { valuetype: _pio.ValueType.String, string: f }, a.push(l)); break; case "object": if (f.getTime && f.getMilliseconds) f + "" != h + "" && (l.value = {
-                            valuetype: _pio.ValueType.DateTime,
-                            datetime: f.getTime()
-                        }, a.push(l)); else {
-                            if (f._circular_reference_finder_) throw new PlayerIOError(PlayerIOErrorCode.CircularReference, "The object you're trying to save contains a circular reference for " + (c ? "a property named" : "the array entry") + "): " + e); f._circular_reference_finder_ = !0; var k = f instanceof Array; if (k && f.bytearray) {
-                                k = Array(f.length); for (h = 0; h != k.length; h++) {
-                                    var m = f[h]; if (0 <= m && 255 >= m) k[h] = m; else throw new PlayerIOError(PlayerIOErrorCode.GeneralError, "The bytearray property '" + e + "' was supposed to only contain byte (0-255) values, but contained the value: " +
-                                        m);
-                                } l.value = { valuetype: _pio.ValueType.ByteArray, bytearray: k }
-                            } else h = _pio.compareForChanges(h, f, !k, !1), l.value = k ? { valuetype: _pio.ValueType.Array, arrayproperties: h } : { valuetype: _pio.ValueType.Obj, objectproperties: h }; a.push(l); delete f._circular_reference_finder_
-                        } break; case "undefined": break; case "function": break; default: throw Error("Don't know how to serialize type '" + typeof f + "' for BigDB");
-                    }
+        var a = [], e; for (e in g) {
+            var f = g[e], h = b ? b[e] : null; switch (e) { case "table": if (d) continue; case "key": if (d) continue; case "save": if (d) continue; case "existsInDatabase": if (d) continue; case "_internal_": if (d) continue; case "_circular_reference_finder_": continue }if (null != f) {
+                var l = c ? { name: e } : { index: parseInt(e) }; switch (typeof f) {
+                    case "boolean": f != h && (l.value = { valuetype: _pio.ValueType.Bool, bool: f }, a.push(l)); break; case "number": f != h && (isFinite(f) && Math.floor(f) === f ? l.value = -2147483648 <= f && 2147483647 >= f ? {
+                        valuetype: _pio.ValueType.Int,
+                        "int": f
+                    } : 0 < f && 4294967295 >= f ? { valuetype: _pio.ValueType.UInt, uint: f } : -0x7ffffffffffffc00 <= f && 0x7ffffffffffffc00 >= f ? { valuetype: _pio.ValueType.Long, "long": f } : 0 < f && 1.844674407370955E19 >= f ? { valuetype: _pio.ValueType.ULong, ulong: f } : { valuetype: _pio.ValueType.Double, "double": f } : l.value = { valuetype: _pio.ValueType.Double, "double": f }, a.push(l)); break; case "string": f != h && (l.value = { valuetype: _pio.ValueType.String, string: f }, a.push(l)); break; case "object": if (f.getTime && f.getMilliseconds) f + "" != h + "" && (l.value = {
+                        valuetype: _pio.ValueType.DateTime,
+                        datetime: f.getTime()
+                    }, a.push(l)); else {
+                        if (f._circular_reference_finder_) throw new PlayerIOError(PlayerIOErrorCode.CircularReference, "The object you're trying to save contains a circular reference for " + (c ? "a property named" : "the array entry") + "): " + e); f._circular_reference_finder_ = !0; var k = f instanceof Array; if (k && f.bytearray) {
+                            k = Array(f.length); for (h = 0; h != k.length; h++) {
+                                var m = f[h]; if (0 <= m && 255 >= m) k[h] = m; else throw new PlayerIOError(PlayerIOErrorCode.GeneralError, "The bytearray property '" + e + "' was supposed to only contain byte (0-255) values, but contained the value: " +
+                                    m);
+                            } l.value = { valuetype: _pio.ValueType.ByteArray, bytearray: k }
+                        } else h = _pio.compareForChanges(h, f, !k, !1), l.value = k ? { valuetype: _pio.ValueType.Array, arrayproperties: h } : { valuetype: _pio.ValueType.Obj, objectproperties: h }; a.push(l); delete f._circular_reference_finder_
+                    } break; case "undefined": break; case "function": break; default: throw Error("Don't know how to serialize type '" + typeof f + "' for BigDB");
                 }
-            } for (e in b) null != g[e] && "undefined" != typeof g[e] || a.push(c ? { name: e } : { index: parseInt(e) }); return a
+            }
+        } for (e in b) null != g[e] && "undefined" != typeof g[e] || a.push(c ? { name: e } : { index: parseInt(e) }); return a
     }; _pio.bigDBDeserialize =
         function (b, g, c) {
             for (var d in b) {
@@ -316,10 +316,10 @@ PlayerIOErrorCode = {
         } function e(a) { return { 0: "Integer", 1: "Unsigned Integer", 2: "Long", 3: "Unsigned Long", 4: "Double", 5: "Float", 6: "String", 7: "ByteArray", 8: "Boolean" }[a] } function f(a) { var c = "object" == typeof a && "undefined" != typeof a.length; if (c) for (var b = 0; b != a.length; b++)if (255 < a[b] || 0 > a[b]) { c = !1; break } return c } var h = this, g = [], k = []; this.type = c; this.length = 0; this.add = function () {
             for (var a =
                 0; a < arguments.length; a++) {
-                    var c = arguments[a]; switch (typeof c) {
-                        case "string": h.addString(c); break; case "boolean": h.addBoolean(c); break; case "number": if (isFinite(c) && Math.floor(c) === c) if (-2147483648 <= c && 2147483647 >= c) { h.addInt(c); break } else if (0 < c && 4294967295 >= c) { h.addUInt(c); break } else if (-0x7ffffffffffffc00 <= c && 0x7ffffffffffffc00 >= c) { h.addLong(c); break } else if (0 < c && 1.844674407370955E19 >= c) { h.addULong(c); break } h.addDouble(c); break; case "object": if (f(c)) { this.addByteArray(c); break } default: throw _pio.error("The type of the value (" +
-                            c + ") cannot be inferred");
-                    }
+                var c = arguments[a]; switch (typeof c) {
+                    case "string": h.addString(c); break; case "boolean": h.addBoolean(c); break; case "number": if (isFinite(c) && Math.floor(c) === c) if (-2147483648 <= c && 2147483647 >= c) { h.addInt(c); break } else if (0 < c && 4294967295 >= c) { h.addUInt(c); break } else if (-0x7ffffffffffffc00 <= c && 0x7ffffffffffffc00 >= c) { h.addLong(c); break } else if (0 < c && 1.844674407370955E19 >= c) { h.addULong(c); break } h.addDouble(c); break; case "object": if (f(c)) { this.addByteArray(c); break } default: throw _pio.error("The type of the value (" +
+                        c + ") cannot be inferred");
+                }
             }
         }; this.addInt = function (a) { b(-2147483648 <= a && 2147483647 >= a, Math.trunc(a), 0, "an integer (32bit)") }; this.addUInt = function (a) { b(0 <= a && 4294967295 >= a, Math.trunc(a), 1, "an unsigned integer (32bit)") }; this.addLong = function (a) { b(-0x7ffffffffffffc00 <= a && 0x7ffffffffffffc00 >= a, Math.trunc(a), 2, "a long (64bit)") }; this.addULong = function (a) { b(0 <= a && 1.844674407370955E19 >= a, a, 3, "an unsigned long (64bit)") }; this.addBoolean = function (a) { b(!0, a ? !0 : !1, 8, "a boolean value") }; this.addFloat = function (a) {
             b(!0,
@@ -421,7 +421,7 @@ PlayerIOErrorCode = {
         this.percentile = "[ERROR: You tried to access oneScore.percentile before loading the OneScore. You have to call the refresh method first.]"; this.score = "[ERROR: You tried to access oneScore.score before loading the OneScore. You have to call the refresh method first.]"; this.topRank = "[ERROR: You tried to access oneScore.topRank before loading the OneScore. You have to call the refresh method first.]"; var g = this; this.refresh = function (c, d) {
             b.oneScoreRefresh(c, d, function (a) {
                 a =
-                new _pio.oneScoreValue(a.onescore.percentile, a.onescore.score, a.onescore.toprank); g.percentile = a.percentile; g.score = a.score; g.topRank = a.toprank
+                    new _pio.oneScoreValue(a.onescore.percentile, a.onescore.score, a.onescore.toprank); g.percentile = a.percentile; g.score = a.score; g.topRank = a.toprank
             })
         }; this.set = function (c, d, a) { b.oneScoreSet(c, d, a, function (a) { a = new _pio.oneScoreValue(a.onescore.percentile, a.onescore.score, a.onescore.toprank); g.percentile = a.percentile; g.score = a.score; g.topRank = a.toprank; return a }) }; this.add = function (c, d, a) {
             b.oneScoreAdd(c, d, a, function (a) {
